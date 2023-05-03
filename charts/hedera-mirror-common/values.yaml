@@ -351,6 +351,9 @@ promtail:
   serviceMonitor:
     enabled: true
 
+stackgres:
+  enabled: true
+
 testkube:
   enabled: false
   namespace: testkube

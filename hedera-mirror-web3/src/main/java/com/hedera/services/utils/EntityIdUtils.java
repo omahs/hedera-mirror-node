@@ -39,6 +39,10 @@ public final class EntityIdUtils {
         throw new UnsupportedOperationException("Utility Class");
     }
 
+    public static boolean isAlias(final AccountID idOrAlias) {
+        return idOrAlias.getAccountNum() == 0 && !idOrAlias.getAlias().isEmpty();
+    }
+
     public static ContractID asContract(final AccountID id) {
         return ContractID.newBuilder()
                 .setRealmNum(id.getRealmNum())

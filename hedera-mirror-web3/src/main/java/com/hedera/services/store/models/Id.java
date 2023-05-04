@@ -19,6 +19,7 @@ package com.hedera.services.store.models;
 import static com.hedera.services.utils.BitPackUtils.perm64;
 import static com.hedera.services.utils.EntityIdUtils.asHexedEvmAddress;
 
+import com.hedera.services.utils.EntityNum;
 import com.hederahashgraph.api.proto.java.AccountID;
 import com.hederahashgraph.api.proto.java.ContractID;
 import com.hederahashgraph.api.proto.java.TokenID;
@@ -67,6 +68,10 @@ public record Id(long shard, long realm, long num) {
                 .setRealmNum(realm)
                 .setContractNum(num)
                 .build();
+    }
+
+    public EntityNum asEntityNum() {
+        return EntityNum.fromLong(num);
     }
 
     @Override

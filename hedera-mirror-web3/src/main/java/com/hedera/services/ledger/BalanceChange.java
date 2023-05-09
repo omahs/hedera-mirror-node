@@ -21,13 +21,21 @@ import static com.hedera.services.utils.EntityIdUtils.isAlias;
 import com.google.protobuf.ByteString;
 import com.hedera.services.store.models.Account;
 import com.hedera.services.store.models.Id;
+import com.hedera.services.store.models.NftId;
+import com.hedera.services.utils.EntityNum;
 import com.hederahashgraph.api.proto.java.AccountID;
+import com.hederahashgraph.api.proto.java.ResponseCodeEnum;
+import com.hederahashgraph.api.proto.java.TokenID;
 
 public class BalanceChange {
+
+    static final TokenID NO_TOKEN_FOR_HBAR_ADJUST = TokenID.getDefaultInstance();
 
     private long newBalance;
     private int expectedDecimals = -1;
     private Id token;
+    private TokenID tokenId = null;
+    private NftId nftId = null;
     private Account account;
     private AccountID accountId;
     private ByteString alias;
@@ -36,6 +44,8 @@ public class BalanceChange {
     private ByteString counterPartyAlias;
     private AccountID payerID = null;
     private AccountID counterPartyAccountId = null;
+
+    private ResponseCodeEnum codeForInsufficientBalance;
 
     public void setNewBalance(final long newBalance) {
         this.newBalance = newBalance;
@@ -47,6 +57,10 @@ public class BalanceChange {
 
     public void setExpectedDecimals(final int expectedDecimals) {
         this.expectedDecimals = expectedDecimals;
+    }
+
+    public boolean isForToken() {
+        return isForFungibleToken() || isForNft();
     }
 
     public int getExpectedDecimals() {
@@ -63,6 +77,43 @@ public class BalanceChange {
 
     public boolean affectsAccount(final AccountID accountId) {
         return accountId.equals(this.account);
+    }
+
+    public boolean hasAlias() {
+        return isAlias(accountId) || hasNonEmptyCounterPartyAlias();
+    }
+
+    public void replaceNonEmptyAliasWith(final EntityNum createdId) {
+        if (isAlias(accountId)) {
+            accountId = createdId.toGrpcAccountId();
+            account = Id.fromGrpcAccount(accountId);
+        } else if (hasNonEmptyCounterPartyAlias()) {
+            counterPartyAccountId = createdId.toGrpcAccountId();
+        }
+    }
+
+    public NftId nftId() {
+        return nftId;
+    }
+
+    public TokenID tokenId() {
+        return (tokenId != null) ? tokenId : NO_TOKEN_FOR_HBAR_ADJUST;
+    }
+
+    public AccountID accountId() {
+        return accountId;
+    }
+
+    public AccountID counterPartyAccountId() {
+        return counterPartyAccountId;
+    }
+
+    public long getAggregatedUnits() {
+        return this.aggregatedUnits;
+    }
+
+    public ResponseCodeEnum codeForInsufficientBalance() {
+        return codeForInsufficientBalance;
     }
 
     /**

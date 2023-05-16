@@ -16,7 +16,7 @@
 
 package com.hedera.services.store.models;
 
-import static com.hedera.services.utils.BitPackUtils.MAX_NUM_ALLOWED;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.MAX_NUM_ALLOWED;
 import static com.hedera.services.utils.EntityIdUtils.asAccount;
 import static com.hedera.services.utils.MiscUtils.asFcKeyUnchecked;
 import static com.hedera.services.utils.TxnUtils.assertFailsWith;

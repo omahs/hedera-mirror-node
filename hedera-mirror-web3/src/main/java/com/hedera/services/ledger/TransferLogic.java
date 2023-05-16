@@ -16,11 +16,15 @@
 
 package com.hedera.services.ledger;
 
+import static com.hedera.services.ledger.properties.AccountProperty.*;
 import static com.hederahashgraph.api.proto.java.ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE;
 import static com.hederahashgraph.api.proto.java.ResponseCodeEnum.OK;
 
 import com.hedera.node.app.service.evm.exceptions.InvalidTransactionException;
 import com.hedera.services.context.TransactionContext;
+import com.hedera.services.ledger.properties.AccountProperty;
+import com.hedera.services.state.migration.HederaAccount;
+import com.hedera.services.store.models.NftId;
 import com.hedera.services.store.tokens.HederaTokenStore;
 import com.hedera.services.utils.EntityNum;
 import com.hederahashgraph.api.proto.java.AccountID;

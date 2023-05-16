@@ -16,8 +16,8 @@
 
 package com.hedera.services.store.models;
 
-import static com.hedera.services.utils.BitPackUtils.getAlreadyUsedAutomaticAssociationsFrom;
-import static com.hedera.services.utils.BitPackUtils.getMaxAutomaticAssociationsFrom;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.getAlreadyUsedAutomaticAssociationsFrom;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.getMaxAutomaticAssociationsFrom;
 
 import com.google.common.base.MoreObjects;
 import com.hedera.node.app.service.evm.store.models.HederaEvmAccount;

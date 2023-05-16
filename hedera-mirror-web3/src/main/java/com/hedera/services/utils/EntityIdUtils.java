@@ -17,7 +17,7 @@
 package com.hedera.services.utils;
 
 import static com.hedera.mirror.web3.evm.account.AccountAccessorImpl.EVM_ADDRESS_SIZE;
-import static com.hedera.services.utils.BitPackUtils.numFromCode;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.numFromCode;
 import static java.lang.System.arraycopy;
 
 import com.google.common.primitives.Ints;

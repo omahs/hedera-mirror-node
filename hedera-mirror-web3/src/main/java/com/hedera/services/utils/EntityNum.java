@@ -16,7 +16,7 @@
 
 package com.hedera.services.utils;
 
-import static com.hedera.services.utils.BitPackUtils.*;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.*;
 import static com.hedera.services.utils.MiscUtils.perm64;
 
 import com.hederahashgraph.api.proto.java.AccountID;

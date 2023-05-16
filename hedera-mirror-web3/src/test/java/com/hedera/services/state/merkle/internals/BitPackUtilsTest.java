@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.hedera.services.utils;
+package com.hedera.services.state.merkle.internals;
 
-import static com.hedera.services.utils.BitPackUtils.*;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.hedera.services.state.merkle.internals.BitPackUtils;
 import org.junit.jupiter.api.Test;
 
 class BitPackUtilsTest {

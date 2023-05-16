@@ -18,7 +18,7 @@ package com.hedera.services.store.models;
 
 import static com.hedera.node.app.service.evm.utils.ValidationUtils.validateFalse;
 import static com.hedera.node.app.service.evm.utils.ValidationUtils.validateTrue;
-import static com.hedera.services.utils.BitPackUtils.MAX_NUM_ALLOWED;
+import static com.hedera.services.state.merkle.internals.BitPackUtils.MAX_NUM_ALLOWED;
 import static com.hedera.services.utils.MiscUtils.asUsableFcKey;
 import static com.hederahashgraph.api.proto.java.ResponseCodeEnum.*;
 

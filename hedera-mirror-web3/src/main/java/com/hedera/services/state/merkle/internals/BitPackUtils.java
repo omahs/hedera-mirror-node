@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hedera.services.utils;
+package com.hedera.services.state.merkle.internals;
 
 import lombok.experimental.UtilityClass;
 

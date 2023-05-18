@@ -18,7 +18,15 @@ package com.hedera.services.utils;
 
 import com.hedera.services.jproto.JKey;
 import com.hederahashgraph.api.proto.java.Key;
+
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.codec.DecoderException;
 
 public final class MiscUtils {
@@ -59,5 +67,17 @@ public final class MiscUtils {
         } catch (final DecoderException ignore) {
             return Optional.empty();
         }
+    }
+
+    public static <T extends Enum<T>> Set<T> csvSet(
+            final String propertyValue, final Function<String, T> parser, final Class<T> type) {
+        return csvStream(propertyValue, parser).collect(Collectors.toCollection(() -> EnumSet.noneOf(type)));
+    }
+
+    public static <T> Stream<T> csvStream(final String propertyValue, final Function<String, T> parser) {
+        return Arrays.stream(propertyValue.split(","))
+                .map(String::strip)
+                .filter(desc -> desc.length() > 0)
+                .map(parser);
     }
 }

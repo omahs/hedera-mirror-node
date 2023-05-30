@@ -40,9 +40,8 @@ import org.hyperledger.besu.evm.worldstate.WrappedEvmAccount;
 public class HederaEvmStackedWorldStateUpdater
         extends AbstractEvmStackedLedgerUpdater<HederaEvmMutableWorldState, Account> {
 
-    protected final HederaEvmEntityAccess hederaEvmEntityAccess;
-
     private static final byte[] NON_CANONICAL_REFERENCE = new byte[20];
+    protected final HederaEvmEntityAccess hederaEvmEntityAccess;
     private final EvmProperties evmProperties;
     private final TokenAccessor tokenAccessor;
     private final StackedStateFrames<Object> stackedStateFrames;
@@ -55,7 +54,13 @@ public class HederaEvmStackedWorldStateUpdater
             final EvmProperties evmProperties,
             final MirrorEvmContractAliases mirrorEvmContractAliases,
             final StackedStateFrames<Object> stackedStateFrames) {
-        super(updater, accountAccessor, tokenAccessor, hederaEvmEntityAccess, stackedStateFrames);
+        super(
+                updater,
+                accountAccessor,
+                tokenAccessor,
+                hederaEvmEntityAccess,
+                mirrorEvmContractAliases,
+                stackedStateFrames);
         this.hederaEvmEntityAccess = hederaEvmEntityAccess;
         this.evmProperties = evmProperties;
         this.stackedStateFrames = stackedStateFrames;

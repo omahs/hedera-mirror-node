@@ -44,7 +44,6 @@ public class AbstractEvmStackedLedgerUpdater<W extends WorldView, A extends Acco
             final StackedStateFrames<Object> stackedStateFrames) {
         super(world, accountAccessor, tokenAccessor, entityAccess);
         this.stackedStateFrames = stackedStateFrames;
-
         this.mirrorEvmContractAliases = mirrorEvmContractAliases;
     }
 

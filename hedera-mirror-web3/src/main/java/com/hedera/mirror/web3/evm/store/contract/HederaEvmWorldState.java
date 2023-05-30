@@ -67,9 +67,9 @@ public class HederaEvmWorldState implements HederaEvmMutableWorldState {
         this.accountAccessor = accountAccessor;
         this.tokenAccessor = tokenAccessor;
         this.entityAddressSequencer = entityAddressSequencer;
+        this.mirrorAliasManager = mirrorAliasManager;
         this.stackedStateFrames = stackedStateFrames;
         stackedStateFrames.push();
-        this.mirrorAliasManager = mirrorAliasManager;
     }
 
     public Account get(final Address address) {
@@ -176,7 +176,13 @@ public class HederaEvmWorldState implements HederaEvmMutableWorldState {
         @Override
         public WorldUpdater updater() {
             return new HederaEvmStackedWorldStateUpdater(
-                    this, accountAccessor, hederaEvmEntityAccess, tokenAccessor, evmProperties, mirrorAliasManager, stackedStateFrames);
+                    this,
+                    accountAccessor,
+                    hederaEvmEntityAccess,
+                    tokenAccessor,
+                    evmProperties,
+                    mirrorAliasManager,
+                    stackedStateFrames);
         }
     }
 }

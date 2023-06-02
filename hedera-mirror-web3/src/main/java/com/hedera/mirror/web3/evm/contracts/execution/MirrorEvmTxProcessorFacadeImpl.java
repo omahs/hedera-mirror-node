@@ -65,7 +65,6 @@ public class MirrorEvmTxProcessorFacadeImpl implements MirrorEvmTxProcessorFacad
             final MirrorNodeEvmProperties evmProperties,
             final TraceProperties traceProperties,
             final StaticBlockMetaSource blockMetaSource,
-            final MirrorEvmContractAliases mirrorEvmContractAliases,
             final PricesAndFeesImpl pricesAndFees,
             final AccountAccessorImpl accountAccessor,
             final TokenAccessorImpl tokenAccessor,
@@ -75,7 +74,7 @@ public class MirrorEvmTxProcessorFacadeImpl implements MirrorEvmTxProcessorFacad
             final PrecompileMapper precompileMapper) {
         this.evmProperties = evmProperties;
         this.blockMetaSource = blockMetaSource;
-        this.mirrorEvmContractAliases = mirrorEvmContractAliases;
+        this.mirrorEvmContractAliases = new MirrorEvmContractAliases(entityAccess);
         this.mirrorOperationTracer = new MirrorOperationTracer(traceProperties, mirrorEvmContractAliases);
         this.pricesAndFees = pricesAndFees;
         this.gasCalculator = gasCalculator;

@@ -25,6 +25,7 @@ import com.hedera.node.app.service.evm.contracts.execution.EvmProperties;
 import com.hedera.node.app.service.evm.store.contracts.AbstractLedgerEvmWorldUpdater;
 import com.hedera.node.app.service.evm.store.contracts.HederaEvmEntityAccess;
 import com.hedera.node.app.service.evm.store.contracts.HederaEvmMutableWorldState;
+import com.hedera.node.app.service.evm.store.contracts.HederaEvmStackedWorldUpdater;
 import com.hedera.node.app.service.evm.store.contracts.HederaEvmWorldStateTokenAccount;
 import com.hedera.node.app.service.evm.store.models.UpdateTrackingAccount;
 import com.hedera.node.app.service.evm.store.tokens.TokenAccessor;
@@ -38,7 +39,8 @@ import org.hyperledger.besu.evm.account.EvmAccount;
 import org.hyperledger.besu.evm.worldstate.WrappedEvmAccount;
 
 public class HederaEvmStackedWorldStateUpdater
-        extends AbstractEvmStackedLedgerUpdater<HederaEvmMutableWorldState, Account> {
+        extends AbstractEvmStackedLedgerUpdater<HederaEvmMutableWorldState, Account>
+        implements HederaEvmStackedWorldUpdater {
 
     private static final byte[] NON_CANONICAL_REFERENCE = new byte[20];
     protected final HederaEvmEntityAccess hederaEvmEntityAccess;
@@ -147,5 +149,15 @@ public class HederaEvmStackedWorldStateUpdater
 
     private boolean isTokenRedirect(final Address address) {
         return hederaEvmEntityAccess.isTokenAccount(address) && evmProperties.isRedirectTokenCallsEnabled();
+    }
+
+    @Override
+    public Address priorityAddress(Address addressOrAlias) {
+        return accountAccessor.canonicalAddress(addressOrAlias);
+    }
+
+    @Override
+    public Address newAliasedContractAddress(Address sponsor, Address alias) {
+        throw new UnsupportedOperationException("CREATE2 operation is not supported yet.");
     }
 }

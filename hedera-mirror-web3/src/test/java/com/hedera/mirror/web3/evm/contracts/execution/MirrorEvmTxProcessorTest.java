@@ -135,7 +135,7 @@ class MirrorEvmTxProcessorTest {
                 evmProperties,
                 gasCalculator,
                 mcps(gasCalculator, stackedStateFrames, evmProperties, precompileMapper),
-                ccps(gasCalculator),
+                ccps(gasCalculator, evmProperties),
                 blockMetaSource,
                 hederaEvmContractAliases,
                 new AbstractCodeCache(10, hederaEvmEntityAccess));

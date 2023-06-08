@@ -1467,6 +1467,20 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(-amount).toArray(), from(ContractLog::getData));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(burnTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(burnTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER2), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb" + String.format("%064d", 0)
+                                        + String.format("%064d", Math.abs(amount)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test
@@ -1557,6 +1571,20 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(SERIAL_NUMBER_1).toArray(), from(ContractLog::getTopic3));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(burnTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(burnTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER2), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb" + String.format("%064d", 0)
+                                        + String.format("%064d", Math.abs(SERIAL_NUMBER_1)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test
@@ -1658,6 +1686,22 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(amount).toArray(), from(ContractLog::getData));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(mintTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(mintTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER2), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb"
+                                        + String.format(
+                                                "%064d", EntityId.of(PAYER2).getId())
+                                        + String.format("%064d", Math.abs(amount)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test
@@ -1765,6 +1809,22 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(SERIAL_NUMBER_1).toArray(), from(ContractLog::getTopic3));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(mintTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(mintTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.EMPTY, from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb"
+                                        + String.format(
+                                                "%064d", EntityId.of(PAYER2).getId())
+                                        + String.format("%064d", Math.abs(SERIAL_NUMBER_1)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test
@@ -2011,6 +2071,22 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(PAYER.getAccountNum()).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(RECEIVER.getAccountNum()).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(SERIAL_NUMBER_1).toArray(), from(ContractLog::getTopic3));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(transferTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(transferTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER).getId(), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb"
+                                        + String.format(
+                                                "%064d", EntityId.of(RECEIVER).getId())
+                                        + String.format("%064d", Math.abs(SERIAL_NUMBER_1)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @ParameterizedTest
@@ -2312,6 +2388,20 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(-transferAmount).toArray(), from(ContractLog::getData));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(wipeTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(wipeTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER2), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb" + String.format("%064d", EntityId.EMPTY.getId())
+                                        + String.format("%064d", Math.abs(transferAmount)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test
@@ -2398,6 +2488,20 @@ class EntityRecordItemListenerTokenTest extends AbstractEntityRecordItemListener
                 .returns(Bytes.ofUnsignedLong(PAYER2.getAccountNum()).toArray(), from(ContractLog::getTopic1))
                 .returns(Bytes.ofUnsignedLong(0).toArray(), from(ContractLog::getTopic2))
                 .returns(Bytes.ofUnsignedLong(SERIAL_NUMBER_1).toArray(), from(ContractLog::getTopic3));
+
+        assertThat(contractResultRepository.findAll())
+                .filteredOn(c -> c.getConsensusTimestamp().equals(wipeTimestamp))
+                .hasSize(1)
+                .first()
+                .returns(wipeTimestamp, from(ContractResult::getConsensusTimestamp))
+                .returns(PAYER_ACCOUNT_ID, from(ContractResult::getPayerAccountId))
+                .returns(EntityId.of(TOKEN_ID).getId(), from(ContractResult::getContractId))
+                .returns(EntityId.of(PAYER2).getId(), from(ContractResult::getSenderId))
+                .returns(
+                        Bytes.fromHexString("a9059cbb" + String.format("%064d", EntityId.EMPTY.getId())
+                                        + String.format("%064d", Math.abs(SERIAL_NUMBER_1)))
+                                .toArray(),
+                        from(ContractResult::getFunctionParameters));
     }
 
     @Test

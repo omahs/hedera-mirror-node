@@ -352,7 +352,7 @@ promtail:
     enabled: true
 
 stackgres:
-  enabled: true
+  enabled: false
 
 testkube:
   enabled: false

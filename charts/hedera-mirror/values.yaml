@@ -282,7 +282,7 @@ stackgres:
       work_mem: "32MB"
     instances: 1
     resources:
-      cpu: 250m
+      cpu: 100m
       memory: 1Gi
     persistentVolume:
       size: 5Gi
